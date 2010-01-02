@@ -1,0 +1,105 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="nl" lang="nl">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Kingsquare JavaScript C64 emulator</title>
+	<link rel="stylesheet" type="text/css" href="css/jsc64.css" media="screen, projection" />
+
+</head>
+<body>
+	<fieldset id="controls">
+		<h2>Roms</h2>
+		<ul id="romList">
+			<li><a href="rom/GALAGA.PRG">GALAGA</a></li>
+			<li><a href="rom/COLOURGALAGA.PRG">GALAGACOLOR</a></li>
+			<li><a href="rom/HELLGATE.PRG">HELLGATE</a></li>
+			<li><a href="rom/MATRIX.PRG">MATRIX</a></li>
+			<li><a href="rom/RALLYSPEEDWAYII.PRG">RALLYSPEEDWAYII</a></li>
+			<li><a href="rom/VOIDRUNNER.PRG">VOIDRUNNER</a></li>
+		</ul>
+		<h2>Controls</h2>
+		<input type="button" id="pauseButton" value="Pause" />
+		You may want to use input below to 'focus' your cursor.
+		<input type="text" id="focusButton" value=""/>
+	</fieldset>
+	<div id="container"></div>
+	<div id="loadingProgress">Booting: <span class="progress">0</span>% complete</div>
+	<h2>What is this?</h2>
+		<p>jsc64 is a Commodore 64 emulator written in JavaScript by Tim de Koning. It's a port of the FC64, the Commodore 64 emulator written in Actionscript by Darron Schall and Claus Wahlers. More information about the Actionscript version can be found <a href="http://codeazur.com.br/stuff/fc64_final/">here</a>.</p>
+		<p>This emulator is meant as a 'proof of concept' and uses the HTML5 Canvas-element to render the Commodore 64 screen layout. This means it will work on all modern browsers, being the lastest version of Firefox, Google Chrome and Safari. Rendering on Internet Explorer should be possible with some minor fixes in the 'Renderer class', but I'm afraid performance will be appalling.</p>
+		<p>The canvas rendering nor the javascript engine isn't as efficient as the Flashplayer so please be patient ;-) or bring a big computer. Like the fc64-version, joystick controls are mapped to the numpad of your keyboard. The space bar can be used as the fire button. Comments are appreciated, please contact me via <a href="http://twitter.com/kingsquare">Twitter</a>.</p>
+	<h2>How do i use this?</h2>
+		<ul>
+			<li>Download the package from github and upload it into a folder on your web server</li>
+			<li>Include jQuery 1.3.2+, the classes (still need a nice auto-loading mechanism...) and the plug-in in your source like
+			<pre>
+				<code class="js">
+	&lt;script type=&quot;text/javascript&quot; src=&quot;js/jquery/jquery-1.3.2.min.js&quot;&gt;&lt;/script&gt;
+	&lt;script type=&quot;text/javascript&quot; src=&quot;js/jquery.jsc64classes.js&quot;&gt;&lt;/script&gt;
+	&lt;script type=&quot;text/javascript&quot; src=&quot;js/jquery.jsc64.js&quot;&gt;&lt;/script&gt;
+				</code>
+			</pre></li>
+			<li>Fix the configuration set up in jquery.jsc64classes.js. Make sure JSC64_BASEPATH is set to folder on your web server containing the plug-in files.</li>
+			<li>Use Jquery to target something as your c64 container, like
+			<pre>
+				<code class="js">
+	&lt;script type=&quot;text/javascript&quot;&gt;
+	$(document).ready(function() {
+		var jsc64 = $('#container').jsc64();
+	});
+	&lt;/script&gt;
+				</code>
+			</pre>
+			</li>
+			<li>Once booted, load a .prg file in your c64 with some javascript, like:
+	&lt;script type=&quot;text/javascript&quot;&gt;
+	$('#container').loadPrg(pathToPrgFile)
+	&lt;/script&gt;
+			This can also be done automatically after booting by adding some event listeners to the jsc64 instance. This option will be documented shortly.
+			</li>
+			<li>Optionally scale your c64 using CSS. Just set a height and width to canvas elements in the c64 container, like
+			<pre>
+				#container canvas{ width: 806px; height: 568px; }
+			</pre>
+			</li>
+		</ul>
+	<h2>Jquery plug-in documentation</h2>
+		<p>For ease of use, the C64 emulator can be loaded and used as a <a href="http://www.jquery.com">Jquery</a> plug-in. The following options are available</p>
+		<h3>$(selector).jsc64([event listener])</h3>
+		<p>This will make a jsc64 of the selected block-level elements. If an event listener is passed as a parameter, this object will be used to listen to keystrokes. this may come in handy when working with more than one instance, and for example different inputs should control different jsc64 instances.</p>
+		<h3>$(selector).loadPrg(pathToPrgFile)</h3>
+		<p>this method can be called upon an instantiated jsc64 instance and will load the assigned rom into the jsc64 instance. Please keep the browsers cross-domain policy in mind.</p>
+	<h2>Source</h2>
+		<p>This program is free software, released under the terms of the GNU General Public License as published by the Free Software Foundation version 2</p>
+		<p>The project main page can be found at <a href="http://www.kingsquare.nl/jsc64">http://www.kingsquare.nl/jsc64</a></p>
+		<p>Please feel free to commit your updates, improvements and bugfixes. A Github repository can be found here: <a href="http://github.com/Kingsquare/jsc64">http://github.com/Kingsquare/jsc64</a></p>
+	<script type="text/javascript" src="js/jquery/jquery-1.3.2.min.js"></script>
+	<script type="text/javascript" src="js/jquery.jsc64classes.js"></script>
+	<script type="text/javascript" src="js/jquery.jsc64.js"></script>
+	<script type="text/javascript">
+		// <![CDATA[
+		$(document).ready(function() {
+			var jsc64 = $('#container').jsc64($(document)), jsc64Instance = jsc64.jsc64GetInstance(),  percentageComplete = 0, bootWaitFunction;
+
+			bootWaitFunction = function() {
+				$('#loadingProgress .progress').text(percentageComplete++);
+				if (percentageComplete>100) {
+					$('#loadingProgress').hide('slow');
+					$('#controls').show('slow');
+					jsc64Instance._renderer.frameTimer.detachEvent('timer', bootWaitFunction);
+				}
+			}
+			jsc64Instance._renderer.frameTimer.addEventListener('timer', bootWaitFunction);
+
+			$('#pauseButton').click(function() {
+				jsc64.jsc64Pause();
+			});
+			$('#romList a').click(function() {
+			  	jsc64.loadPrg($(this).attr('href'));
+			  	return false;
+			});
+		});
+		// ]]>
+	</script>
+</body>
+</html>

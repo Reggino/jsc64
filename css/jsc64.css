@@ -1,0 +1,10 @@
+#container, #log {
+	width: 403px;
+	margin: 10px;
+	float: left;
+	border: 1px solid;
+	height: 284px;
+	position: relative;
+}
+
+#resetButton { float: left; margin: 10px; width: 100px; }
