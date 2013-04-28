@@ -8,6 +8,7 @@ This emulator is meant as a 'proof of concept' and uses the HTML5 Canvas-element
 The canvas rendering nor the javascript engine isn't as efficient as the Flashplayer so please be patient ;-) or bring a big computer. Like the fc64-version, joystick controls are mapped to the numpad of your keyboard. The space bar can be used as the fire button. Comments are appreciated, please contact me via Twitter.
 
 How do i use this?
+------------------
 
 Download the package from github and upload it into a folder on your web server
 Include jQuery 1.3.2+, the classes (still need a nice auto-loading mechanism...) and the plug-in in your source like
@@ -41,6 +42,7 @@ Optionally scale your c64 using CSS. Just set a height and width to canvas eleme
 ```
 			
 Jquery plug-in documentation
+----------------------------
 
 For ease of use, the C64 emulator can be loaded and used as a Jquery plug-in. The following options are available
 ```
@@ -55,5 +57,6 @@ $(selector).loadPrg(pathToPrgFile);
 this method can be called upon an instantiated jsc64 instance and will load the assigned rom into the jsc64 instance. Please keep the browsers cross-domain policy in mind.
 
 Source
+------
 
 This program is free software, released under the terms of the GNU General Public License as published by the Free Software Foundation version 2
