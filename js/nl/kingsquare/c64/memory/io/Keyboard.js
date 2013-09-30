@@ -189,15 +189,19 @@ nl.kingsquare.c64.memory.io.Keyboard = Class.extend({
 			case 16://flash.ui.Keyboard.SHIFT:
 				this.shiftDown = true;
 				break;
+			case 38:
 			case 104: //flash.ui.Keyboard.NUMPAD_8:
 				this.joystickMask |= 0x01;
 				break;
+			case 40:
 			case 98: //flash.ui.Keyboard.NUMPAD_2:
 				this.joystickMask |= 0x02;
 				break;
+			case 37:
 			case 100: //flash.ui.Keyboard.NUMPAD_4:
 				this.joystickMask |= 0x04;
 				break;
+			case 39:
 			case 102: //flash.ui.Keyboard.NUMPAD_6:
 				this.joystickMask |= 0x08;
 				break;
