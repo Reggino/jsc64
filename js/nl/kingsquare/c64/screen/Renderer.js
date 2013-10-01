@@ -73,19 +73,24 @@ nl.kingsquare.c64.screen.Renderer = nl.kingsquare.as3.flash.events.EventDispatch
 		}
 		.displayBack {
 			z-index: 1;
-			}
+		}
 		.displayBorder {
 			z-index: 0;
 		}*/
+		this.canvasWidth = 403;
+		this.canvasHeight = 284;
 
 		// border bitmap
-		this.displayBack = new nl.kingsquare.as3.flash.display.BitmapData($('<canvas class="displayBack" style="position: absolute; top: 0px; left: 0px;" width="403" height="284" />').appendTo(container)[0].getContext('2d'));
+		$.each(['Back', 'Border', 'Fore'], function (key, canvasId) {
+			self['display' + canvasId + 'OffScreen'] = document.createElement('canvas'); //$('<canvas width="' + self.canvasWidth + '" height="' + self.canvasHeight + '" />')[0];
+			self['display' + canvasId + 'OffScreen'].width = self.canvasWidth;
+			self['display' + canvasId + 'OffScreen'].height = self.canvasHeight;
+			self['display' + canvasId ]  = new nl.kingsquare.as3.flash.display.BitmapData(self['display' + canvasId + 'OffScreen'].getContext('2d'));
+			self['display' + canvasId + 'OnScreen'] = $('<canvas class="display' + canvasId + '" style="position: absolute; top: 0px; left: 0px;" width="' + self.canvasWidth + '" height="' + self.canvasHeight + '" />').appendTo(container)[0];
+			self['display' + canvasId + 'OnScreenContext'] = self['display' + canvasId + 'OnScreen'].getContext('2d');
+		});
+		console.log(self);
        	this.displayBack.fillRect(new nl.kingsquare.as3.flash.geom.Rectangle(0, 0, 403, 284), 0xFF000000);
-
-		this.displayBorder = new nl.kingsquare.as3.flash.display.BitmapData($('<canvas class="displayBorder"  style="position: absolute; top: 0px; left: 0px;" width="403" height="284" >Your browser cannot display a canvas element, please use a modern browser...</canvas>').appendTo(container)[0].getContext('2d'));
-
-		// foreground bitmap
-		this.displayFore = new nl.kingsquare.as3.flash.display.BitmapData($('<canvas class="displayFore" style="position: absolute; top: 0px; left: 0px;" width="403" height="284"  />').appendTo(container)[0].getContext('2d'));
 
 		// setup frame timer
 		this.frameTimer = new nl.kingsquare.as3.flash.Timer(1, 0);
@@ -128,11 +133,7 @@ nl.kingsquare.c64.screen.Renderer = nl.kingsquare.as3.flash.events.EventDispatch
 	},
 
 	frameLoop: function(event/*:TimerEvent*/)/*:void*/ {
-		var t/*:int*/ = nl.kingsquare.as3.flash.utils.getTimer();
-
-		//this.displayBack.lock();
-		//this.displayFore.lock();
-		//this.displayBorder.lock();
+		var self = this, t = nl.kingsquare.as3.flash.utils.getTimer();
 
 		this.dispatchEvent("rasterInternal", 0xffff);
 
@@ -185,9 +186,10 @@ nl.kingsquare.c64.screen.Renderer = nl.kingsquare.as3.flash.events.EventDispatch
 			this.raster++;
 		}
 
-		//this.displayBorder.unlock();
-		//this.displayFore.unlock();
-		//this.displayBack.unlock();
+		$.each(['Back', 'Border', 'Fore'], function (key, canvasId) {
+			self['display' + canvasId + 'OnScreenContext'].clearRect(0, 0, self.canvasWidth, self.canvasHeight);
+			self['display' + canvasId + 'OnScreenContext'].drawImage(self['display' + canvasId + 'OffScreen'], 0, 0);
+		});
 
 		if(this.frameTimer.running) {
 			//event.updateAfterEvent();
