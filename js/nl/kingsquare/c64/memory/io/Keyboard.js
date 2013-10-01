@@ -183,7 +183,7 @@ nl.kingsquare.c64.memory.io.Keyboard = Class.extend({
 		var keyCode/*:int*/ = event.keyCode;
 
 		switch(keyCode) {
-			case 38: //flash.ui.Keyboard.PAGE_UP:
+			case 33: //flash.ui.Keyboard.PAGE_UP:
 				this.cpu.NMI();
 				break;
 			case 16://flash.ui.Keyboard.SHIFT:
