@@ -23,7 +23,21 @@
 
 	nl.kingsquare.as3.flash.display.BitmapData = Class.extend({
 		init: function (context) {
+			var pixelData;
 			this.context = context;
+
+			// Not all browsers implement createImageData. On such browsers we obtain the
+			// ImageData object using the getImageData method. The worst-case scenario is
+			// to create an object *similar* to the ImageData object and hope for the best
+			// luck.
+			if (this.context.createImageData) {
+				pixelData = this.context.createImageData(1, 1);
+			} else if (this.context.getImageData) {
+				pixelData = this.context.getImageData(0, 0, 1, 1);
+			} else {
+				pixelData = {'width' : 1, 'height' : 1, 'data' : new Array(4)};
+			}
+			this.pixelData = pixelData;
 		},
 
 		fillRect: function (rect/*:Rectangle*/, color/*:uint*/) {
@@ -35,31 +49,19 @@
 		},
 
 		setPixel32: function (x, y, color) {
-			var pixelData;
+			var data = this.pixelData.data;
 
 			color = (color || 0);
 			x = (x || 0);
 			y = (y || 0);
 
-			// Not all browsers implement createImageData. On such browsers we obtain the
-			// ImageData object using the getImageData method. The worst-case scenario is
-			// to create an object *similar* to the ImageData object and hope for the best
-			// luck.
-			if (this.context.createImageData) {
-				pixelData = this.context.createImageData(1, 1);
-			} else if (this.context.getImageData) {
-				pixelData = this.context.getImageData(x, y, 1, 1);
-			} else {
-				pixelData = {'width' : 1, 'height' : 1, 'data' : new Array(4)};
-			}
-
-			pixelData.data[0] = (color >> 16) & 0xFF; //R
-			pixelData.data[1] = (color >> 8) & 0xFF; //G
-			pixelData.data[2] = (color) & 0xFF; //B
-			pixelData.data[3] = (color >> 24) & 0xFF; //A
+			data[0] = (color >> 16) & 0xFF; //R
+			data[1] = (color >> 8) & 0xFF; //G
+			data[2] = (color) & 0xFF; //B
+			data[3] = (color >> 24) & 0xFF; //A
 
 			// Draw the ImageData object.
-			this.context.putImageData(pixelData, x, y);
+			this.context.putImageData(this.pixelData, x, y);
 		}
 	});
 }());

@@ -1,5 +1,5 @@
 {
-	"globals": { "nl": false, "$": false, "trace": false },
+	"globals": { "nl": false, "$": false, "trace": false, "Class": false },
 	"plusplus": false,
 	"bitwise": false,
 	"browser": true,
