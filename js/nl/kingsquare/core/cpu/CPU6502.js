@@ -209,7 +209,7 @@ nl.kingsquare.core.cpu.CPU6502 = nl.kingsquare.as3.flash.events.EventDispatcher.
 
 
 	// ==========================================================
-	//    O this.p C O D E   H this.a N D L E R S
+	//    O P C O D E   H A N D L E R S
 	// ==========================================================
 
 	,opBRK: function(addr/* :Function */)/* :void */ {
@@ -496,7 +496,7 @@ nl.kingsquare.core.cpu.CPU6502 = nl.kingsquare.as3.flash.events.EventDispatcher.
 
 
 	// ============================================================
-	//    O this.p C O D E   H this.a N D L E R S  ( U N O F F I C I this.a L )
+	//    O P C O D E   H A N D L E R S  ( U N O F F I C I A L )
 	// ============================================================
 
 	,opASO: function(addr/* :Function */)/* :void */ {
@@ -721,7 +721,7 @@ nl.kingsquare.core.cpu.CPU6502 = nl.kingsquare.as3.flash.events.EventDispatcher.
 
 
 	// ==========================================================
-	//    this.a D D R E S S I N G   M O D E   M E T H O D S
+	//    A D D R E S S I N G   M O D E   M E T H O D S
 	// ==========================================================
 
 	/**
@@ -995,7 +995,7 @@ nl.kingsquare.core.cpu.CPU6502 = nl.kingsquare.as3.flash.events.EventDispatcher.
 
 
 	// ==========================================================
-	//    S T this.a C K   this.a C C E S S   M E T H O D S
+	//    S T A C K   A C C E S S   M E T H O D S
 	// ==========================================================
 
 	/**
@@ -1033,7 +1033,7 @@ nl.kingsquare.core.cpu.CPU6502 = nl.kingsquare.as3.flash.events.EventDispatcher.
 
 
 	// ==========================================================
-	//    D I S this.a S S E M B L E R
+	//    D I S A S S E M B L E R
 	// ==========================================================
 
 	,disassemble: function(address/* :int */, instructionCount/* :int */, dumpAdr/* :boolean */, dumpHex/* :boolean */)/* :String */ {
@@ -1091,7 +1091,7 @@ nl.kingsquare.core.cpu.CPU6502 = nl.kingsquare.as3.flash.events.EventDispatcher.
 
 
 	// ==========================================================
-	//    C L this.a S S   I N I T I this.a L I Z this.a T I O N
+	//    C L A S S   I N I T I A L I Z A T I O N
 	// ==========================================================
 
 	,getOpcodeTable: function()/* :Array */ {
