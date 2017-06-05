@@ -21,10 +21,12 @@
  */
 
 //CONFIG
-var JSC64_BASEPATH = 'js/';
+if (typeof JSC64_BASEPATH === 'undefined') {
+	JSC64_BASEPATH = 'js/';
+}
 
-//this should be minified and combined with jquery.jsc64.js one day, for now, lets make it debugable...
-var nl = {}, i = 0, dependancies = ['com/nagoon97/BinFileReader.js', 'org/ejohn/Class.js',
+//this should be minified and combined with jquery.jsc64.js one day, for now, lets make it debuggable...
+var nl = {}, i = 0, dependencies = ['com/nagoon97/BinFileReader.js', 'org/ejohn/Class.js',
 		'nl/kingsquare/as3/globalFunctions.js',	'nl/kingsquare/as3/flash/events/EventDispatcher.js',
 		'nl/kingsquare/as3/flash/utils.js', 'nl/kingsquare/as3/flash/utils/ByteArray.js', 'nl/kingsquare/as3/flash/utils/Timer.js',
 		'nl/kingsquare/as3/flash/geom/Rectangle.js',	'nl/kingsquare/as3/flash/display/BitmapData.js',	'nl/kingsquare/c64/memory/MemoryBankInfo.js',
@@ -48,11 +50,11 @@ nl.kingsquare.core.misc = {};
 nl.kingsquare.core.exceptions = {};
 nl.kingsquare.as3 = {};
 nl.kingsquare.as3.flash = {};
-nl.kingsquare.as3.flash.utils = {}
-nl.kingsquare.as3.flash.events = {}
-nl.kingsquare.as3.flash.geom = {}
-nl.kingsquare.as3.flash.display = {}
+nl.kingsquare.as3.flash.utils = {};
+nl.kingsquare.as3.flash.events = {};
+nl.kingsquare.as3.flash.geom = {};
+nl.kingsquare.as3.flash.display = {};
 
-for (var i in dependancies) {
-	document.write('<script src="'+ JSC64_BASEPATH+dependancies[i]+'" type="text/javascript"></script>');
+for (var i in dependencies) {
+	document.write('<script src="'+ JSC64_BASEPATH+dependencies[i]+'" type="text/javascript"></script>');
 };
