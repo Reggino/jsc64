@@ -69,7 +69,7 @@
 				self['display' + canvasId + 'OffScreen'].width = self.canvasWidth;
 				self['display' + canvasId + 'OffScreen'].height = self.canvasHeight;
 				self['display' + canvasId]  = new nl.kingsquare.as3.flash.display.BitmapData(self['display' + canvasId
-						+ 'OffScreen'].getContext('2d'));
+						+ 'OffScreen'].getContext('2d',{alpha:true}));
 				self['display' + canvasId + 'OnScreen'] = $('<canvas class="display' + canvasId
 						+ '" style="position: absolute; top: 0px; left: 0px;" width="' + self.canvasWidth
 						+ '" height="' + self.canvasHeight + '" />').appendTo(container)[0];

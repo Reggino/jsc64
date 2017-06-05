@@ -39,15 +39,15 @@
 			}
 			this.pixelData = pixelData;
 		},
-
-		fillRect: function (rect/*:Rectangle*/, color/*:uint*/) {
+		
+/*
+		fillRect: function (rect, color) {//Rectangle:rect,uint:color
 			this.context.clearRect(rect.x, rect.y, rect.width, rect.height);
 			this.context.fillStyle = 'rgba(' + ((color >> 16) & 0xFF) +
 					',' + ((color >> 8) & 0xFF) + ',' + ((color >> 0) & 0xFF) +
 					', ' + ((color >> 24) & 0xFF) / 255 + ')';
 			this.context.fillRect(rect.x, rect.y, rect.width, rect.height);
 		},
-
 		setPixel32: function (x, y, color) {
 			var data = this.pixelData.data;
 
@@ -62,6 +62,37 @@
 
 			// Draw the ImageData object.
 			this.context.putImageData(this.pixelData, x, y);
+		},
+*/
+
+		colorMap:{},
+		translateColor:function(color){
+			var col = 'rgba(' + ((color >> 16) & 0xFF) +',' + ((color >> 8) & 0xFF) + ',' + ((color >> 0) & 0xFF) + ',1)';
+			this.colorMap[color]=col;
+			return col;
+		},
+		fillRect: function (rect, color) {//:Rectangle,:uint
+			if(color==0){
+				this.context.clearRect(rect.x, rect.y, rect.width, rect.height);
+				return;
+			}
+			if(this.lastFillColor!=color){
+				this.lastFillColor=color;
+				var col = this.colorMap[color];
+				if(col==undefined)col = this.translateColor(color);
+				this.context.fillStyle = col;
+			}
+			this.context.fillRect(rect.x, rect.y, rect.width, rect.height);
+		},
+		setPixel32: function (x, y, color) {
+			if(this.lastFillColor!=color){
+				this.lastFillColor=color;
+				var col = this.colorMap[color];
+				if(col==undefined)col = this.translateColor(color);
+				this.context.fillStyle = col;
+			}
+			this.context.fillRect(x|0,y|0,1,1);
 		}
 	});
 }());
+
