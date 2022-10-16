@@ -11,8 +11,8 @@ How do i use this?
 ------------------
 
 Download the package from github and upload it into a folder on your web server
-Include jQuery 1.3.2+, the classes (still need a nice auto-loading mechanism...) and the plug-in in your source like
-<script type="text/javascript" src="js/jquery/jquery-1.3.2.min.js"></script>
+Include jQuery 1.12.4+, the classes (still need a nice auto-loading mechanism...) and the plug-in in your source like
+<script type="text/javascript" src="js/jquery/jquery-1.12.4.min.js"></script>
 <script type="text/javascript" src="js/jquery.jsc64classes.js"></script>
 <script type="text/javascript" src="js/jquery.jsc64.js"></script>
             
